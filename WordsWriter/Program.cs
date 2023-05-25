@@ -6,7 +6,7 @@ using System.Reflection;
 using System.Text.RegularExpressions;
 using System.Text;
 using static System.Net.Mime.MediaTypeNames;
-
+using System.Diagnostics;
 
 namespace WordsWriter
 {
@@ -14,18 +14,38 @@ namespace WordsWriter
     {
         static void Main(string[] args)
         {
+           
             try
             {
+                var Timer = new Stopwatch();
                 string filePath;
+                string resultPath;
+                string MultyThreadResultPath;
+                var wf = new WordsFinder.WordsFinder();
                 Console.Write("Введите путь к файлу: ");
                 filePath = Console.ReadLine();
-                string resultPath;
                 Console.Write("Введите путь к результату: ");
                 resultPath = Console.ReadLine();
+                Console.Write("Введите путь к результату работы многопоточного метода: ");
+                MultyThreadResultPath = Console.ReadLine();
+
                 Dictionary<string, int> _words = new Dictionary<string, int>();
                 string text = File.ReadAllText(filePath);
+                //метод из первого задания
+                Timer.Start();
                 _words = CountWords(text);
+                Timer.Stop();
+                Console.WriteLine($"Время выполнения приватного метода:{Timer.Elapsed.ToString()}");
+                Timer.Reset();
                 WriteToFile(resultPath, _words);
+                //Многопоточный метод
+                Timer.Start();
+                _words = wf.CountWordsPublic(text);
+                Timer.Stop(); 
+                Console.WriteLine($"Время выполнения публичного многопоточного метода метода:{Timer.Elapsed.ToString()}");
+                Timer.Reset();
+                WriteToFile(MultyThreadResultPath, _words);
+
             }
             catch (Exception ex) 
             {

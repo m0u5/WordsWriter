@@ -14,28 +14,36 @@ namespace WordsWriter
     {
         static void Main(string[] args)
         {
+            try
+            {
+                string filePath;
+                Console.Write("Введите путь к файлу: ");
+                filePath = Console.ReadLine();
+                string resultPath;
+                Console.Write("Введите путь к результату: ");
+                resultPath = Console.ReadLine();
+                Dictionary<string, int> _words = new Dictionary<string, int>();
+                string text = File.ReadAllText(filePath);
+                _words = CountWords(text);
+                WriteToFile(resultPath, _words);
+            }
+            catch (Exception ex) 
+            {
+                Console.WriteLine(ex.Message); 
+                Console.ReadKey();
+            }
             
-            string filePath;
-            Console.Write("Введите путь к файлу: ");
-            filePath = Console.ReadLine();
-            string resultPath;
-            Console.Write("Введите путь к резульату: ");
-            resultPath = Console.ReadLine();
-            Dictionary<string, int> _words = new Dictionary<string, int>();
-            string text= File.ReadAllText(filePath);
-            _words = CountWords(text);
-            WriteToFile(resultPath, _words);
+            
             
         }
         private static Dictionary<string, int> CountWords(string text)
         {
             string dllPath = "WordsFinder.dll";
             Assembly assembly = Assembly.LoadFrom(dllPath);
-            Type type = assembly.GetType("WordsFinder.WordsFinder");
-            object instance = Activator.CreateInstance(type);
-            MethodInfo method = type.GetMethod("CountWords", BindingFlags.NonPublic | BindingFlags.Instance);
-
-            Dictionary<string, int> result = (Dictionary<string, int>)method.Invoke(instance, new object[] { text });
+            var type = assembly.GetType("WordsFinder.WordsFinder");
+            var instance = Activator.CreateInstance(type);
+            var method = type.GetMethod("CountWords", BindingFlags.NonPublic | BindingFlags.Instance);
+            var result = (Dictionary<string, int>)method.Invoke(instance, new object[] { text });
             return result;
         }
         private static void WriteToFile(string resultPath, Dictionary<string, int> result )

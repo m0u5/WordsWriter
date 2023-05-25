@@ -25,6 +25,7 @@ namespace WordsWriter
             string text= File.ReadAllText(filePath);
             _words = CountWords(text);
             WriteToFile(resultPath, _words);
+            
         }
         private static Dictionary<string, int> CountWords(string text)
         {

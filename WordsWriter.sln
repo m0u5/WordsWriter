@@ -5,6 +5,11 @@ VisualStudioVersion = 17.5.33516.290
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WordsWriter", "WordsWriter\WordsWriter.csproj", "{05CF19B7-4479-4D19-93BC-0E7FD766959D}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Элементы решения", "Элементы решения", "{8DC91B89-82B7-48E8-BBD4-BBA097939BA4}"
+	ProjectSection(SolutionItems) = preProject
+		..\WordsFinder\WordsFinder\bin\Debug\net7.0\WordsFinder.dll = ..\WordsFinder\WordsFinder\bin\Debug\net7.0\WordsFinder.dll
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU

@@ -30,6 +30,8 @@ namespace WordsWriter
                 MultyThreadResultPath = Console.ReadLine();
 
                 Dictionary<string, int> _words = new Dictionary<string, int>();
+                Dictionary<string, int> _words1 = new Dictionary<string, int>();
+                Dictionary<string, int> _words2 = new Dictionary<string, int>();
                 string text = File.ReadAllText(filePath);
                 //метод из первого задания
                 Timer.Start();
@@ -40,11 +42,18 @@ namespace WordsWriter
                 WriteToFile(resultPath, _words);
                 //Многопоточный метод
                 Timer.Start();
-                _words = wf.CountWordsPublic(text);
+                _words1 = wf.CountWordsPublic(text);
                 Timer.Stop(); 
-                Console.WriteLine($"Время выполнения публичного многопоточного метода метода:{Timer.Elapsed.ToString()}");
+                Console.WriteLine($"Время выполнения публичного многопоточного метода:{Timer.Elapsed.ToString()}");
                 Timer.Reset();
-                WriteToFile(MultyThreadResultPath, _words);
+                WriteToFile(MultyThreadResultPath, _words1);
+                Timer.Start();
+                _words2 = wf.CountWordsWithParallel(text);
+                Timer.Stop();
+                Console.WriteLine($"Время выполнения публичного parallel метода:{Timer.Elapsed.ToString()}");
+                Timer.Reset();
+                WriteToFile(MultyThreadResultPath, _words2);
+                Console.ReadKey();
 
             }
             catch (Exception ex) 
